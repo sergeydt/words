@@ -1,0 +1,489 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'i',
+1 verbose cli   '-g',
+1 verbose cli   'snockets' ]
+2 info using npm@1.1.62
+3 info using node@v0.8.11
+4 verbose read json /usr/local/lib/package.json
+5 verbose read json /usr/local/lib/package.json
+6 verbose cache add [ 'snockets', null ]
+7 silly cache add name=undefined spec="snockets" args=["snockets",null]
+8 verbose parsed url { pathname: 'snockets', path: 'snockets', href: 'snockets' }
+9 silly lockFile a4aa1bc7-snockets snockets
+10 verbose lock snockets /home/dunice/.npm/a4aa1bc7-snockets.lock
+11 silly lockFile a4aa1bc7-snockets snockets
+12 verbose addNamed [ 'snockets', '' ]
+13 verbose addNamed [ null, '' ]
+14 silly lockFile 01b70d54-snockets snockets@
+15 verbose lock snockets@ /home/dunice/.npm/01b70d54-snockets.lock
+16 silly addNameRange { name: 'snockets', range: '', hasData: false }
+17 verbose url raw snockets
+18 verbose url resolving [ 'https://registry.npmjs.org/', './snockets' ]
+19 verbose url resolved https://registry.npmjs.org/snockets
+20 info trying registry request attempt 1 at 18:10:08
+21 verbose etag "6G0WSQWM7PDJ4QXY3UJQKBPJE"
+22 http GET https://registry.npmjs.org/snockets
+23 http 304 https://registry.npmjs.org/snockets
+24 silly registry.get cb [ 304,
+24 silly registry.get   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+24 silly registry.get     etag: '"6G0WSQWM7PDJ4QXY3UJQKBPJE"',
+24 silly registry.get     date: 'Sat, 06 Oct 2012 14:10:10 GMT',
+24 silly registry.get     'content-length': '0' } ]
+25 verbose etag snockets from cache
+26 silly addNameRange number 2 { name: 'snockets', range: '', hasData: true }
+27 silly addNameRange versions [ 'snockets',
+27 silly addNameRange   [ '1.0.0',
+27 silly addNameRange     '1.1.0',
+27 silly addNameRange     '1.2.0',
+27 silly addNameRange     '1.2.3',
+27 silly addNameRange     '1.2.4',
+27 silly addNameRange     '1.2.5',
+27 silly addNameRange     '1.3.0',
+27 silly addNameRange     '1.3.1',
+27 silly addNameRange     '1.3.2',
+27 silly addNameRange     '1.3.3',
+27 silly addNameRange     '1.3.4',
+27 silly addNameRange     '1.3.5',
+27 silly addNameRange     '1.3.6',
+27 silly addNameRange     '1.3.7',
+27 silly addNameRange     '1.3.8' ] ]
+28 verbose addNamed [ 'snockets', '1.3.8' ]
+29 verbose addNamed [ '1.3.8', '1.3.8' ]
+30 silly lockFile f463494f-snockets-1-3-8 snockets@1.3.8
+31 verbose lock snockets@1.3.8 /home/dunice/.npm/f463494f-snockets-1-3-8.lock
+32 verbose read json /home/dunice/.npm/snockets/1.3.8/package/package.json
+33 silly lockFile f463494f-snockets-1-3-8 snockets@1.3.8
+34 silly lockFile 01b70d54-snockets snockets@
+35 silly resolved [ { author: { name: 'Trevor Burnham', url: 'http://trevorburnham.com' },
+35 silly resolved     name: 'snockets',
+35 silly resolved     description: 'Sprockets-esque script concatenation for Node',
+35 silly resolved     version: '1.3.8',
+35 silly resolved     homepage: 'http://github.com/TrevorBurnham/snockets',
+35 silly resolved     repository:
+35 silly resolved      { type: 'git',
+35 silly resolved        url: 'git://github.com/TrevorBurnham/snockets.git' },
+35 silly resolved     main: 'lib/snockets.js',
+35 silly resolved     dependencies:
+35 silly resolved      { 'coffee-script': '>=1.1.2',
+35 silly resolved        'dep-graph': '1.1.0',
+35 silly resolved        mime: '1.2.2',
+35 silly resolved        'uglify-js': '1.0.7',
+35 silly resolved        underscore: '1.1.7' },
+35 silly resolved     devDependencies:
+35 silly resolved      { 'coffee-script': '1.1.2',
+35 silly resolved        nodeunit: '0.5.4',
+35 silly resolved        watchit: '>=0.0.1' },
+35 silly resolved     readme: '# Snockets\n\nA JavaScript/CoffeeScript concatenation tool for Node.js inspired by [Sprockets](https://github.com/sstephenson/sprockets). Used by [connect-assets](http://github.com/TrevorBurnham/connect-assets) to create a Rails 3.1-style asset pipeline.\n\nWritten in CoffeeScript by the author of [CoffeeScript: Accelerated JavaScript Development](http://pragprog.com/book/tbcoffee/coffeescript).\n\n## Usage (script-side)\n\nIn your CoffeeScript files, write Sprockets-style comments to indicate dependencies, e.g.\n\n    #= require dependency\n\n(or `//= require dependency` in JavaScript). If you want to bring in a whole folder of scripts, use\n\n    #= require_tree dir\n\n## Usage (Node-side)\n\nFirst,\n\n    npm install snockets\n\nThen in your app:\n\n    Snockets = require \'snockets\'\n    snockets = new Snockets()\n\nEach `Snockets` instance has a `depGraph` property, an instance of [dep-graph](https://github.com/TrevorBurnham/dep-graph). You can `scan` a file to just update the dependency graph:\n\n    snockets.scan \'dir/foo.coffee\', (err, depGraph) -> ...\n\nTo get a list of filenames showing the series of dependencies the scanned file has, you\'d use `depGraph.getChain \'dir/foo.coffee\'`.\n\nYou can get a list of compiled JavaScripts corresponding to the dependency chain (starting from the first required file to the requested file) using `getCompiledChain`:\n\n    snockets.getCompiledChain \'dir/foo.coffee\', (err, jsList) -> ...\n\nThe result is in the format `[{filename: "dependency1.js", js: "// code"}, ...]`. Note that those JavaScript files are not actually created by `getCompiledChain`.\n\nSnockets can also provide a single compiled, concatenated file (optionally run through [UglifyJS](https://github.com/mishoo/UglifyJS) if the `minify` option is passed in):\n\n    snockets.getConcatenation \'dir/foo.coffee\', minify: true, (err, js) -> ...\n\nNote that you don\'t need to `scan` before or after running `getCompiledChain` or `getConcatenation`; they update the dependency graph the same way that `scan` does.\n\n## Synchronous mode\n\nBy default, Snockets uses only async file methods. You can pass the option `async: false` to either of its methods if you want it to be synchronous instead. In synchronous mode, you can use either callbacks or return values, e.g.\n\n    js = snockets.getConcatenation \'dir/foo.coffee\', async: false\n\n## License\n\n©2011 Trevor Burnham and available under the [MIT license](http://www.opensource.org/licenses/mit-license.php):\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.',
+35 silly resolved     _id: 'snockets@1.3.8',
+35 silly resolved     _from: 'snockets' } ]
+36 info install snockets@1.3.8 into /usr/local/lib
+37 info installOne snockets@1.3.8
+38 verbose from cache /home/dunice/.npm/snockets/1.3.8/package/package.json
+39 info /usr/local/lib/node_modules/snockets unbuild
+40 verbose read json /usr/local/lib/node_modules/snockets/package.json
+41 verbose tar unpack /home/dunice/.npm/snockets/1.3.8/package.tgz
+42 silly lockFile c3c1f365--local-lib-node-modules-snockets /usr/local/lib/node_modules/snockets
+43 verbose lock /usr/local/lib/node_modules/snockets /home/dunice/.npm/c3c1f365--local-lib-node-modules-snockets.lock
+44 silly gunzTarPerm modes [ '755', '644' ]
+45 silly gunzTarPerm extractEntry package.json
+46 silly gunzTarPerm extractEntry .npmignore
+47 silly gunzTarPerm extractEntry src/snockets.coffee
+48 silly gunzTarPerm extractEntry test/assets/y.js
+49 silly gunzTarPerm extractEntry test/assets/yin.js
+50 silly gunzTarPerm extractEntry test/assets/fellowship.js
+51 silly gunzTarPerm extractEntry test/assets/b.js
+52 silly gunzTarPerm extractEntry test/assets/testing.js
+53 silly gunzTarPerm extractEntry test/assets/jquery-1.6.4.js
+54 silly gunzTarPerm extractEntry test/assets/1.2.3.coffee
+55 silly gunzTarPerm extractEntry test/assets/z.coffee
+56 silly gunzTarPerm extractEntry test/assets/x.coffee
+57 silly gunzTarPerm extractEntry test/assets/first/syblingFolder.js
+58 silly gunzTarPerm extractEntry test/assets/trilogy.coffee
+59 silly gunzTarPerm extractEntry test/assets/middleEarth/legolas.coffee
+60 silly gunzTarPerm extractEntry test/assets/middleEarth/shire/bilbo.js
+61 silly gunzTarPerm extractEntry test/assets/middleEarth/shire/frodo.coffee
+62 silly gunzTarPerm extractEntry test/assets/poly.coffee
+63 silly gunzTarPerm extractEntry test/assets/branch/periphery.js
+64 silly gunzTarPerm extractEntry test/assets/branch/edge.coffee
+65 silly gunzTarPerm extractEntry test/assets/branch/center.coffee
+66 silly gunzTarPerm extractEntry test/assets/branch/unwanted
+67 silly gunzTarPerm extractEntry test/assets/branch/subbranch/leaf.js
+68 silly gunzTarPerm extractEntry test/assets/sybling/sybling.js
+69 silly gunzTarPerm extractEntry test/assets/a.coffee
+70 silly gunzTarPerm extractEntry test/assets/yang.coffee
+71 silly gunzTarPerm extractEntry test/assets/song/loveAndMarriage.js
+72 silly gunzTarPerm extractEntry test/assets/song/horseAndCarriage.coffee
+73 silly gunzTarPerm extractEntry test/integration.coffee
+74 silly gunzTarPerm extractEntry lib/snockets.js
+75 silly gunzTarPerm extractEntry README.mdown
+76 silly gunzTarPerm extractEntry Cakefile
+77 silly gunzTarPerm extractEntry docs/snockets.html
+78 silly gunzTarPerm extractEntry docs/docco.css
+79 verbose read json /usr/local/lib/node_modules/snockets/package.json
+80 silly lockFile c3c1f365--local-lib-node-modules-snockets /usr/local/lib/node_modules/snockets
+81 info preinstall snockets@1.3.8
+82 verbose from cache /usr/local/lib/node_modules/snockets/package.json
+83 verbose readDependencies using package.json deps
+84 verbose from cache /usr/local/lib/node_modules/snockets/package.json
+85 verbose readDependencies using package.json deps
+86 verbose cache add [ 'coffee-script@>=1.1.2', null ]
+87 silly cache add name=undefined spec="coffee-script@>=1.1.2" args=["coffee-script@>=1.1.2",null]
+88 verbose parsed url { pathname: 'coffee-script@%3E=1.1.2',
+88 verbose parsed url   path: 'coffee-script@%3E=1.1.2',
+88 verbose parsed url   href: 'coffee-script@%3E=1.1.2' }
+89 silly cache add name="coffee-script" spec=">=1.1.2" args=["coffee-script",">=1.1.2"]
+90 verbose parsed url { pathname: '%3E=1.1.2', path: '%3E=1.1.2', href: '%3E=1.1.2' }
+91 verbose addNamed [ 'coffee-script', '>=1.1.2' ]
+92 verbose addNamed [ null, '>=1.1.2' ]
+93 silly lockFile b623b8b9-coffee-script-1-1-2 coffee-script@>=1.1.2
+94 verbose lock coffee-script@>=1.1.2 /home/dunice/.npm/b623b8b9-coffee-script-1-1-2.lock
+95 verbose cache add [ 'dep-graph@1.1.0', null ]
+96 silly cache add name=undefined spec="dep-graph@1.1.0" args=["dep-graph@1.1.0",null]
+97 verbose parsed url { pathname: 'dep-graph@1.1.0',
+97 verbose parsed url   path: 'dep-graph@1.1.0',
+97 verbose parsed url   href: 'dep-graph@1.1.0' }
+98 silly cache add name="dep-graph" spec="1.1.0" args=["dep-graph","1.1.0"]
+99 verbose parsed url { pathname: '1.1.0', path: '1.1.0', href: '1.1.0' }
+100 verbose addNamed [ 'dep-graph', '1.1.0' ]
+101 verbose addNamed [ '1.1.0', '1.1.0' ]
+102 silly lockFile 190e1861-dep-graph-1-1-0 dep-graph@1.1.0
+103 verbose lock dep-graph@1.1.0 /home/dunice/.npm/190e1861-dep-graph-1-1-0.lock
+104 silly addNameRange { name: 'coffee-script', range: '>=1.1.2', hasData: false }
+105 verbose cache add [ 'mime@1.2.2', null ]
+106 silly cache add name=undefined spec="mime@1.2.2" args=["mime@1.2.2",null]
+107 verbose parsed url { pathname: 'mime@1.2.2',
+107 verbose parsed url   path: 'mime@1.2.2',
+107 verbose parsed url   href: 'mime@1.2.2' }
+108 silly cache add name="mime" spec="1.2.2" args=["mime","1.2.2"]
+109 verbose parsed url { pathname: '1.2.2', path: '1.2.2', href: '1.2.2' }
+110 verbose addNamed [ 'mime', '1.2.2' ]
+111 verbose addNamed [ '1.2.2', '1.2.2' ]
+112 silly lockFile 8e1cfc19-mime-1-2-2 mime@1.2.2
+113 verbose lock mime@1.2.2 /home/dunice/.npm/8e1cfc19-mime-1-2-2.lock
+114 verbose cache add [ 'uglify-js@1.0.7', null ]
+115 silly cache add name=undefined spec="uglify-js@1.0.7" args=["uglify-js@1.0.7",null]
+116 verbose parsed url { pathname: 'uglify-js@1.0.7',
+116 verbose parsed url   path: 'uglify-js@1.0.7',
+116 verbose parsed url   href: 'uglify-js@1.0.7' }
+117 silly cache add name="uglify-js" spec="1.0.7" args=["uglify-js","1.0.7"]
+118 verbose parsed url { pathname: '1.0.7', path: '1.0.7', href: '1.0.7' }
+119 verbose addNamed [ 'uglify-js', '1.0.7' ]
+120 verbose addNamed [ '1.0.7', '1.0.7' ]
+121 silly lockFile 1b46c787-uglify-js-1-0-7 uglify-js@1.0.7
+122 verbose lock uglify-js@1.0.7 /home/dunice/.npm/1b46c787-uglify-js-1-0-7.lock
+123 verbose cache add [ 'underscore@1.1.7', null ]
+124 silly cache add name=undefined spec="underscore@1.1.7" args=["underscore@1.1.7",null]
+125 verbose parsed url { pathname: 'underscore@1.1.7',
+125 verbose parsed url   path: 'underscore@1.1.7',
+125 verbose parsed url   href: 'underscore@1.1.7' }
+126 silly cache add name="underscore" spec="1.1.7" args=["underscore","1.1.7"]
+127 verbose parsed url { pathname: '1.1.7', path: '1.1.7', href: '1.1.7' }
+128 verbose addNamed [ 'underscore', '1.1.7' ]
+129 verbose addNamed [ '1.1.7', '1.1.7' ]
+130 silly lockFile ca2008c0-underscore-1-1-7 underscore@1.1.7
+131 verbose lock underscore@1.1.7 /home/dunice/.npm/ca2008c0-underscore-1-1-7.lock
+132 verbose url raw underscore/1.1.7
+133 verbose url resolving [ 'https://registry.npmjs.org/', './underscore/1.1.7' ]
+134 verbose url resolved https://registry.npmjs.org/underscore/1.1.7
+135 info trying registry request attempt 1 at 18:10:10
+136 verbose etag "471YEDF9Z1IRXTFMGKGPHYFWE"
+137 http GET https://registry.npmjs.org/underscore/1.1.7
+138 verbose url raw uglify-js/1.0.7
+139 verbose url resolving [ 'https://registry.npmjs.org/', './uglify-js/1.0.7' ]
+140 verbose url resolved https://registry.npmjs.org/uglify-js/1.0.7
+141 info trying registry request attempt 1 at 18:10:10
+142 verbose etag "6YBN5RQUEAMOF7U28VM6OOTD5"
+143 http GET https://registry.npmjs.org/uglify-js/1.0.7
+144 verbose url raw mime/1.2.2
+145 verbose url resolving [ 'https://registry.npmjs.org/', './mime/1.2.2' ]
+146 verbose url resolved https://registry.npmjs.org/mime/1.2.2
+147 info trying registry request attempt 1 at 18:10:10
+148 verbose etag "86LZHJ3CLIZZ04XDPF8CNIHZL"
+149 http GET https://registry.npmjs.org/mime/1.2.2
+150 verbose url raw coffee-script
+151 verbose url resolving [ 'https://registry.npmjs.org/', './coffee-script' ]
+152 verbose url resolved https://registry.npmjs.org/coffee-script
+153 info trying registry request attempt 1 at 18:10:10
+154 verbose etag "ES3SNJJG9CXPB6XEIRPAT2G3G"
+155 http GET https://registry.npmjs.org/coffee-script
+156 verbose url raw dep-graph/1.1.0
+157 verbose url resolving [ 'https://registry.npmjs.org/', './dep-graph/1.1.0' ]
+158 verbose url resolved https://registry.npmjs.org/dep-graph/1.1.0
+159 info trying registry request attempt 1 at 18:10:10
+160 verbose etag "ABODKPJ7ZK9QMYOG40MDNIF8Y"
+161 http GET https://registry.npmjs.org/dep-graph/1.1.0
+162 http 304 https://registry.npmjs.org/underscore/1.1.7
+163 silly registry.get cb [ 304,
+163 silly registry.get   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+163 silly registry.get     etag: '"471YEDF9Z1IRXTFMGKGPHYFWE"',
+163 silly registry.get     date: 'Sat, 06 Oct 2012 14:10:11 GMT',
+163 silly registry.get     'content-length': '0' } ]
+164 verbose etag underscore/1.1.7 from cache
+165 verbose read json /home/dunice/.npm/underscore/1.1.7/package/package.json
+166 silly lockFile ca2008c0-underscore-1-1-7 underscore@1.1.7
+167 http 304 https://registry.npmjs.org/coffee-script
+168 silly registry.get cb [ 304,
+168 silly registry.get   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+168 silly registry.get     etag: '"ES3SNJJG9CXPB6XEIRPAT2G3G"',
+168 silly registry.get     date: 'Sat, 06 Oct 2012 14:10:11 GMT',
+168 silly registry.get     'content-length': '0' } ]
+169 verbose etag coffee-script from cache
+170 silly addNameRange number 2 { name: 'coffee-script', range: '>=1.1.2', hasData: true }
+171 silly addNameRange versions [ 'coffee-script',
+171 silly addNameRange   [ '0.7.0',
+171 silly addNameRange     '0.7.1',
+171 silly addNameRange     '0.7.2',
+171 silly addNameRange     '0.9.0',
+171 silly addNameRange     '0.9.1',
+171 silly addNameRange     '0.9.2',
+171 silly addNameRange     '0.9.3',
+171 silly addNameRange     '0.9.4',
+171 silly addNameRange     '0.9.5',
+171 silly addNameRange     '0.9.6',
+171 silly addNameRange     '1.0.0',
+171 silly addNameRange     '1.0.1',
+171 silly addNameRange     '1.1.0',
+171 silly addNameRange     '1.1.1',
+171 silly addNameRange     '1.1.2',
+171 silly addNameRange     '1.1.3',
+171 silly addNameRange     '1.2.0',
+171 silly addNameRange     '1.3.0',
+171 silly addNameRange     '1.3.1',
+171 silly addNameRange     '1.3.2',
+171 silly addNameRange     '1.3.3' ] ]
+172 verbose addNamed [ 'coffee-script', '1.3.3' ]
+173 verbose addNamed [ '1.3.3', '1.3.3' ]
+174 silly lockFile 022c8436-coffee-script-1-3-3 coffee-script@1.3.3
+175 verbose lock coffee-script@1.3.3 /home/dunice/.npm/022c8436-coffee-script-1-3-3.lock
+176 verbose read json /home/dunice/.npm/coffee-script/1.3.3/package/package.json
+177 silly lockFile 022c8436-coffee-script-1-3-3 coffee-script@1.3.3
+178 silly lockFile b623b8b9-coffee-script-1-1-2 coffee-script@>=1.1.2
+179 http 304 https://registry.npmjs.org/mime/1.2.2
+180 silly registry.get cb [ 304,
+180 silly registry.get   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+180 silly registry.get     etag: '"86LZHJ3CLIZZ04XDPF8CNIHZL"',
+180 silly registry.get     date: 'Sat, 06 Oct 2012 14:10:11 GMT',
+180 silly registry.get     'content-length': '0' } ]
+181 verbose etag mime/1.2.2 from cache
+182 verbose read json /home/dunice/.npm/mime/1.2.2/package/package.json
+183 silly lockFile 8e1cfc19-mime-1-2-2 mime@1.2.2
+184 http 304 https://registry.npmjs.org/uglify-js/1.0.7
+185 silly registry.get cb [ 304,
+185 silly registry.get   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+185 silly registry.get     etag: '"6YBN5RQUEAMOF7U28VM6OOTD5"',
+185 silly registry.get     date: 'Sat, 06 Oct 2012 14:10:11 GMT',
+185 silly registry.get     'content-length': '0' } ]
+186 verbose etag uglify-js/1.0.7 from cache
+187 verbose read json /home/dunice/.npm/uglify-js/1.0.7/package/package.json
+188 silly lockFile 1b46c787-uglify-js-1-0-7 uglify-js@1.0.7
+189 http 304 https://registry.npmjs.org/dep-graph/1.1.0
+190 silly registry.get cb [ 304,
+190 silly registry.get   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+190 silly registry.get     etag: '"ABODKPJ7ZK9QMYOG40MDNIF8Y"',
+190 silly registry.get     date: 'Sat, 06 Oct 2012 14:10:11 GMT',
+190 silly registry.get     'content-length': '0' } ]
+191 verbose etag dep-graph/1.1.0 from cache
+192 verbose read json /home/dunice/.npm/dep-graph/1.1.0/package/package.json
+193 silly lockFile 190e1861-dep-graph-1-1-0 dep-graph@1.1.0
+194 silly resolved [ { name: 'underscore',
+194 silly resolved     description: 'JavaScript\'s functional programming helper library.',
+194 silly resolved     homepage: 'http://documentcloud.github.com/underscore/',
+194 silly resolved     keywords: [ 'util', 'functional', 'server', 'client', 'browser' ],
+194 silly resolved     author: { name: 'Jeremy Ashkenas', email: 'jeremy@documentcloud.org' },
+194 silly resolved     contributors: [],
+194 silly resolved     dependencies: {},
+194 silly resolved     repository:
+194 silly resolved      { type: 'git',
+194 silly resolved        url: 'git://github.com/documentcloud/underscore.git' },
+194 silly resolved     main: 'underscore.js',
+194 silly resolved     version: '1.1.7',
+194 silly resolved     readme: '                   __                                                         \n                  /\\ \\                                                         __           \n __  __    ___    \\_\\ \\     __   _ __   ____    ___    ___   _ __    __       /\\_\\    ____  \n/\\ \\/\\ \\ /\' _ `\\  /\'_  \\  /\'__`\\/\\  __\\/ ,__\\  / ___\\ / __`\\/\\  __\\/\'__`\\     \\/\\ \\  /\',__\\ \n\\ \\ \\_\\ \\/\\ \\/\\ \\/\\ \\ \\ \\/\\  __/\\ \\ \\//\\__, `\\/\\ \\__//\\ \\ \\ \\ \\ \\//\\  __/  __  \\ \\ \\/\\__, `\\\n \\ \\____/\\ \\_\\ \\_\\ \\___,_\\ \\____\\\\ \\_\\\\/\\____/\\ \\____\\ \\____/\\ \\_\\\\ \\____\\/\\_\\ _\\ \\ \\/\\____/\n  \\/___/  \\/_/\\/_/\\/__,_ /\\/____/ \\/_/ \\/___/  \\/____/\\/___/  \\/_/ \\/____/\\/_//\\ \\_\\ \\/___/ \n                                                                              \\ \\____/      \n                                                                               \\/___/\n\nUnderscore is a utility-belt library for JavaScript that provides \nsupport for the usual functional suspects (each, map, reduce, filter...) \nwithout extending any core JavaScript objects.\n\nFor Docs, License, Tests, and pre-packed downloads, see:\nhttp://documentcloud.github.com/underscore/\n\nMany thanks to our contributors:\nhttps://github.com/documentcloud/underscore/contributors\n',
+194 silly resolved     _id: 'underscore@1.1.7',
+194 silly resolved     _from: 'underscore@1.1.7' },
+194 silly resolved   { name: 'coffee-script',
+194 silly resolved     description: 'Unfancy JavaScript',
+194 silly resolved     keywords: [ 'javascript', 'language', 'coffeescript', 'compiler' ],
+194 silly resolved     author: { name: 'Jeremy Ashkenas' },
+194 silly resolved     version: '1.3.3',
+194 silly resolved     licenses: [ [Object] ],
+194 silly resolved     engines: { node: '>=0.4.0' },
+194 silly resolved     directories: { lib: './lib/coffee-script' },
+194 silly resolved     main: './lib/coffee-script/coffee-script',
+194 silly resolved     bin: { coffee: './bin/coffee', cake: './bin/cake' },
+194 silly resolved     homepage: 'http://coffeescript.org',
+194 silly resolved     bugs: 'https://github.com/jashkenas/coffee-script/issues',
+194 silly resolved     repository:
+194 silly resolved      { type: 'git',
+194 silly resolved        url: 'git://github.com/jashkenas/coffee-script.git' },
+194 silly resolved     devDependencies: { 'uglify-js': '>=1.0.0', jison: '>=0.2.0' },
+194 silly resolved     readme: '\n            {\n         }   }   {\n        {   {  }  }\n         }   }{  {\n        {  }{  }  }                    _____       __  __\n       ( }{ }{  { )                   / ____|     / _|/ _|\n     .- { { }  { }} -.               | |     ___ | |_| |_ ___  ___\n    (  ( } { } { } }  )              | |    / _ \\|  _|  _/ _ \\/ _ \\\n    |`-..________ ..-\'|              | |___| (_) | | | ||  __/  __/\n    |                 |               \\_____\\___/|_| |_| \\___|\\___|\n    |                 ;--.\n    |                (__  \\            _____           _       _\n    |                 | )  )          / ____|         (_)     | |\n    |                 |/  /          | (___   ___ _ __ _ _ __ | |_\n    |                 (  /            \\___ \\ / __| \'__| | \'_ \\| __|\n    |                 |/              ____) | (__| |  | | |_) | |_\n    |                 |              |_____/ \\___|_|  |_| .__/ \\__|\n     `-.._________..-\'                                  | |\n                                                        |_|\n\n\n  CoffeeScript is a little language that compiles into JavaScript.\n\n  Install Node.js, and then the CoffeeScript compiler:\n  sudo bin/cake install\n\n  Or, if you have the Node Package Manager installed:\n  npm install -g coffee-script\n  (Leave off the -g if you don\'t wish to install globally.)\n\n  Execute a script:\n  coffee /path/to/script.coffee\n\n  Compile a script:\n  coffee -c /path/to/script.coffee\n\n  For documentation, usage, and examples, see:\n  http://coffeescript.org/\n\n  To suggest a feature, report a bug, or general discussion:\n  http://github.com/jashkenas/coffee-script/issues/\n\n  If you\'d like to chat, drop by #coffeescript on Freenode IRC,\n  or on webchat.freenode.net.\n\n  The source repository:\n  git://github.com/jashkenas/coffee-script.git\n\n  All contributors are listed here:\n  http://github.com/jashkenas/coffee-script/contributors\n',
+194 silly resolved     _id: 'coffee-script@1.3.3',
+194 silly resolved     _from: 'coffee-script@>=1.1.2' },
+194 silly resolved   { name: 'mime',
+194 silly resolved     description: 'A comprehensive library for mime-type mapping',
+194 silly resolved     url: 'http://github.com/bentomas/node-mime',
+194 silly resolved     keywords: [ 'util', 'mime' ],
+194 silly resolved     author:
+194 silly resolved      { name: 'Benjamin Thomas',
+194 silly resolved        email: 'benjamin@benjaminthomas.org' },
+194 silly resolved     contributors: [],
+194 silly resolved     dependencies: {},
+194 silly resolved     lib: '.',
+194 silly resolved     main: 'mime.js',
+194 silly resolved     version: '1.2.2',
+194 silly resolved     readme: '# mime\n\nSupport for mapping between file extensions and MIME types.  This module uses the latest version of the Apache "mime.types" file (maps over 620 types to 800+ extensions).  It is also trivially easy to add your own types and extensions, should you need to do that.\n\n## Install\n\nInstall with [npm](http://github.com/isaacs/npm):\n\n    npm install mime\n\n## API\n\n### mime.lookup(path) - lookup the type for a file or extension\n\n    var mime = require(\'mime\');\n\n    mime.lookup(\'/path/to/file.txt\');         // => \'text/plain\'\n    mime.lookup(\'file.txt\');                  // => \'text/plain\'\n    mime.lookup(\'.txt\');                      // => \'text/plain\'\n    mime.lookup(\'htm\');                       // => \'text/html\'\n\n### mime.extension(type) - lookup the default extension for type\n\n    mime.extension(\'text/html\');                 // => \'html\'\n    mime.extension(\'application/octet-stream\');  // => \'bin\'\n\n### mime.charsets.lookup() - map mime-type to charset\n\n    mime.charsets.lookup(\'text/plain\');        // => \'UTF-8\'\n\n(The logic for charset lookups is pretty rudimentary.  Feel free to suggest improvements.)\n\n## "Can you add support for [some type/extension]?"\n\nStart by adding support for the type in your project using the mime.define() or mime.load() methods (documented below).\n\nIf there\'s a type that is shared across node.js modules, by different people, create an issue here and we\'ll add it if it makes sense.\n\nIf the type in question applies to projects outside the node.js community (e.g. if [IANA](http://www.iana.org/assignments/media-types/) approves a new type) file a [bug with Apache](http://httpd.apache.org/bug_report.html) and create an issue here that links to it.\n\n### mime.define() - Add custom mime/extension mappings\n\n    mime.define({\n        \'text/x-some-format\': [\'x-sf\', \'x-sft\', \'x-sfml\'],\n        \'application/x-my-type\': [\'x-mt\', \'x-mtt\'],\n        // etc ...\n    });\n\n    mime.lookup(\'x-sft\');                 // => \'text/x-some-format\'\n    mime.extension(\'text/x-some-format\'); // => \'x-sf\'\n\n### mime.load(filepath) - Load mappings from an Apache ".types" format file\n\n    mime.load(\'./my_project.types\');\n',
+194 silly resolved     _id: 'mime@1.2.2',
+194 silly resolved     _from: 'mime@1.2.2' },
+194 silly resolved   { name: 'uglify-js',
+194 silly resolved     author:
+194 silly resolved      { name: 'Mihai Bazon',
+194 silly resolved        email: 'mihai.bazon@gmail.com',
+194 silly resolved        url: 'http://mihai.bazon.net/blog' },
+194 silly resolved     version: '1.0.7',
+194 silly resolved     main: './uglify-js.js',
+194 silly resolved     bin: { uglifyjs: './bin/uglifyjs' },
+194 silly resolved     repository: { type: 'git', url: 'git@github.com:mishoo/UglifyJS.git' },
+194 silly resolved     readme: '<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"\n               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml"\nlang="en" xml:lang="en">\n<head>\n<title>UglifyJS -- a JavaScript parser/compressor/beautifier</title>\n<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>\n<meta name="generator" content="Org-mode"/>\n<meta name="generated" content="2011-08-20 10:08:28 EEST"/>\n<meta name="author" content="Mihai Bazon"/>\n<meta name="description" content="a JavaScript parser/compressor/beautifier in JavaScript"/>\n<meta name="keywords" content="javascript, js, parser, compiler, compressor, mangle, minify, minifier"/>\n<style type="text/css">\n <!--/*--><![CDATA[/*><!--*/\n  html { font-family: Times, serif; font-size: 12pt; }\n  .title  { text-align: center; }\n  .todo   { color: red; }\n  .done   { color: green; }\n  .tag    { background-color: #add8e6; font-weight:normal }\n  .target { }\n  .timestamp { color: #bebebe; }\n  .timestamp-kwd { color: #5f9ea0; }\n  p.verse { margin-left: 3% }\n  pre {\n\tborder: 1pt solid #AEBDCC;\n\tbackground-color: #F3F5F7;\n\tpadding: 5pt;\n\tfont-family: courier, monospace;\n        font-size: 90%;\n        overflow:auto;\n  }\n  table { border-collapse: collapse; }\n  td, th { vertical-align: top; }\n  dt { font-weight: bold; }\n  div.figure { padding: 0.5em; }\n  div.figure p { text-align: center; }\n  textarea { overflow-x: auto; }\n  .linenr { font-size:smaller }\n  .code-highlighted {background-color:#ffff00;}\n  .org-info-js_info-navigation { border-style:none; }\n  #org-info-js_console-label { font-size:10px; font-weight:bold;\n                               white-space:nowrap; }\n  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;\n                                 font-weight:bold; }\n  /*]]>*/-->\n</style>\n<link rel="stylesheet" type="text/css" href="docstyle.css" />\n<script type="text/javascript">\n<!--/*--><![CDATA[/*><!--*/\n function CodeHighlightOn(elem, id)\n {\n   var target = document.getElementById(id);\n   if(null != target) {\n     elem.cacheClassElem = elem.className;\n     elem.cacheClassTarget = target.className;\n     target.className = "code-highlighted";\n     elem.className   = "code-highlighted";\n   }\n }\n function CodeHighlightOff(elem, id)\n {\n   var target = document.getElementById(id);\n   if(elem.cacheClassElem)\n     elem.className = elem.cacheClassElem;\n   if(elem.cacheClassTarget)\n     target.className = elem.cacheClassTarget;\n }\n/*]]>*///-->\n</script>\n\n</head>\n<body>\n<div id="content">\n\n<h1 class="title">UglifyJS &ndash; a JavaScript parser/compressor/beautifier</h1>\n\n\n<div id="table-of-contents">\n<h2>Table of Contents</h2>\n<div id="text-table-of-contents">\n<ul>\n<li><a href="#sec-1">1 UglifyJS &mdash; a JavaScript parser/compressor/beautifier </a>\n<ul>\n<li><a href="#sec-1_1">1.1 Unsafe transformations </a>\n<ul>\n<li><a href="#sec-1_1_1">1.1.1 Calls involving the global Array constructor </a></li>\n<li><a href="#sec-1_1_2">1.1.2 <code>obj.toString()</code> ==&gt; <code>obj+“”</code> </a></li>\n</ul>\n</li>\n<li><a href="#sec-1_2">1.2 Install (NPM) </a></li>\n<li><a href="#sec-1_3">1.3 Install latest code from GitHub </a></li>\n<li><a href="#sec-1_4">1.4 Usage </a>\n<ul>\n<li><a href="#sec-1_4_1">1.4.1 API </a></li>\n<li><a href="#sec-1_4_2">1.4.2 Beautifier shortcoming &ndash; no more comments </a></li>\n</ul>\n</li>\n<li><a href="#sec-1_5">1.5 Compression &ndash; how good is it? </a></li>\n<li><a href="#sec-1_6">1.6 Bugs? </a></li>\n<li><a href="#sec-1_7">1.7 Links </a></li>\n<li><a href="#sec-1_8">1.8 License </a></li>\n</ul>\n</li>\n</ul>\n</div>\n</div>\n\n<div id="outline-container-1" class="outline-2">\n<h2 id="sec-1"><span class="section-number-2">1</span> UglifyJS &mdash; a JavaScript parser/compressor/beautifier </h2>\n<div class="outline-text-2" id="text-1">\n\n\n<p>\nThis package implements a general-purpose JavaScript\nparser/compressor/beautifier toolkit.  It is developed on <a href="http://nodejs.org/">NodeJS</a>, but it\nshould work on any JavaScript platform supporting the CommonJS module system\n(and if your platform of choice doesn\'t support CommonJS, you can easily\nimplement it, or discard the <code>exports.*</code> lines from UglifyJS sources).\n</p>\n<p>\nThe tokenizer/parser generates an abstract syntax tree from JS code.  You\ncan then traverse the AST to learn more about the code, or do various\nmanipulations on it.  This part is implemented in <a href="../lib/parse-js.js">parse-js.js</a> and it\'s a\nport to JavaScript of the excellent <a href="http://marijn.haverbeke.nl/parse-js/">parse-js</a> Common Lisp library from <a href="http://marijn.haverbeke.nl/">Marijn Haverbeke</a>.\n</p>\n<p>\n( See <a href="http://github.com/mishoo/cl-uglify-js">cl-uglify-js</a> if you\'re looking for the Common Lisp version of\nUglifyJS. )\n</p>\n<p>\nThe second part of this package, implemented in <a href="../lib/process.js">process.js</a>, inspects and\nmanipulates the AST generated by the parser to provide the following:\n</p>\n<ul>\n<li>\nability to re-generate JavaScript code from the AST.  Optionally\nindented&mdash;you can use this if you want to “beautify” a program that has\nbeen compressed, so that you can inspect the source.  But you can also run\nour code generator to print out an AST without any whitespace, so you\nachieve compression as well.\n\n</li>\n<li>\nshorten variable names (usually to single characters).  Our mangler will\nanalyze the code and generate proper variable names, depending on scope\nand usage, and is smart enough to deal with globals defined elsewhere, or\nwith <code>eval()</code> calls or <code>with{}</code> statements.  In short, if <code>eval()</code> or\n<code>with{}</code> are used in some scope, then all variables in that scope and any\nvariables in the parent scopes will remain unmangled, and any references\nto such variables remain unmangled as well.\n\n</li>\n<li>\nvarious small optimizations that may lead to faster code but certainly\nlead to smaller code.  Where possible, we do the following:\n\n<ul>\n<li>\nfoo["bar"]  ==&gt;  foo.bar\n\n</li>\n<li>\nremove block brackets <code>{}</code>\n\n</li>\n<li>\njoin consecutive var declarations:\nvar a = 10; var b = 20; ==&gt; var a=10,b=20;\n\n</li>\n<li>\nresolve simple constant expressions: 1 +2 * 3 ==&gt; 7.  We only do the\nreplacement if the result occupies less bytes; for example 1/3 would\ntranslate to 0.333333333333, so in this case we don\'t replace it.\n\n</li>\n<li>\nconsecutive statements in blocks are merged into a sequence; in many\ncases, this leaves blocks with a single statement, so then we can remove\nthe block brackets.\n\n</li>\n<li>\nvarious optimizations for IF statements:\n\n<ul>\n<li>\nif (foo) bar(); else baz(); ==&gt; foo?bar():baz();\n</li>\n<li>\nif (!foo) bar(); else baz(); ==&gt; foo?baz():bar();\n</li>\n<li>\nif (foo) bar(); ==&gt; foo&amp;&amp;bar();\n</li>\n<li>\nif (!foo) bar(); ==&gt; foo||bar();\n</li>\n<li>\nif (foo) return bar(); else return baz(); ==&gt; return foo?bar():baz();\n</li>\n<li>\nif (foo) return bar(); else something(); ==&gt; {if(foo)return bar();something()}\n\n</li>\n</ul>\n</li>\n<li>\nremove some unreachable code and warn about it (code that follows a\n<code>return</code>, <code>throw</code>, <code>break</code> or <code>continue</code> statement, except\nfunction/variable declarations).\n</li>\n</ul>\n</li>\n</ul>\n\n\n\n</div>\n\n<div id="outline-container-1_1" class="outline-3">\n<h3 id="sec-1_1"><span class="section-number-3">1.1</span> <span class="target">Unsafe transformations</span>  </h3>\n<div class="outline-text-3" id="text-1_1">\n\n\n<p>\nThe following transformations can in theory break code, although they\'re\nprobably safe in most practical cases.  To enable them you need to pass the\n<code>--unsafe</code> flag.\n</p>\n\n</div>\n\n<div id="outline-container-1_1_1" class="outline-4">\n<h4 id="sec-1_1_1"><span class="section-number-4">1.1.1</span> Calls involving the global Array constructor </h4>\n<div class="outline-text-4" id="text-1_1_1">\n\n\n<p>\nThe following transformations occur:\n</p>\n\n\n\n<pre class="src src-js"><span style="color: #a020f0;">new</span> <span style="color: #228b22;">Array</span>(1, 2, 3, 4)  =&gt; [1,2,3,4]\nArray(a, b, c)         =&gt; [a,b,c]\n<span style="color: #a020f0;">new</span> <span style="color: #228b22;">Array</span>(5)           =&gt; Array(5)\n<span style="color: #a020f0;">new</span> <span style="color: #228b22;">Array</span>(a)           =&gt; Array(a)\n</pre>\n\n\n\n<p>\nThese are all safe if the Array name isn\'t redefined.  JavaScript does allow\none to globally redefine Array (and pretty much everything, in fact) but I\npersonally don\'t see why would anyone do that.\n</p>\n<p>\nUglifyJS does handle the case where Array is redefined locally, or even\nglobally but with a <code>function</code> or <code>var</code> declaration.  Therefore, in the\nfollowing cases UglifyJS <b>doesn\'t touch</b> calls or instantiations of Array:\n</p>\n\n\n\n<pre class="src src-js"><span style="color: #b22222;">// </span><span style="color: #b22222;">case 1.  globally declared variable\n</span>  <span style="color: #a020f0;">var</span> <span style="color: #b8860b;">Array</span>;\n  <span style="color: #a020f0;">new</span> <span style="color: #228b22;">Array</span>(1, 2, 3);\n  Array(a, b);\n\n  <span style="color: #b22222;">// </span><span style="color: #b22222;">or (can be declared later)\n</span>  <span style="color: #a020f0;">new</span> <span style="color: #228b22;">Array</span>(1, 2, 3);\n  <span style="color: #a020f0;">var</span> <span style="color: #b8860b;">Array</span>;\n\n  <span style="color: #b22222;">// </span><span style="color: #b22222;">or (can be a function)\n</span>  <span style="color: #a020f0;">new</span> <span style="color: #228b22;">Array</span>(1, 2, 3);\n  <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">Array</span>() { ... }\n\n<span style="color: #b22222;">// </span><span style="color: #b22222;">case 2.  declared in a function\n</span>  (<span style="color: #a020f0;">function</span>(){\n    a = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">Array</span>(1, 2, 3);\n    b = Array(5, 6);\n    <span style="color: #a020f0;">var</span> <span style="color: #b8860b;">Array</span>;\n  })();\n\n  <span style="color: #b22222;">// </span><span style="color: #b22222;">or\n</span>  (<span style="color: #a020f0;">function</span>(<span style="color: #b8860b;">Array</span>){\n    <span style="color: #a020f0;">return</span> Array(5, 6, 7);\n  })();\n\n  <span style="color: #b22222;">// </span><span style="color: #b22222;">or\n</span>  (<span style="color: #a020f0;">function</span>(){\n    <span style="color: #a020f0;">return</span> <span style="color: #a020f0;">new</span> <span style="color: #228b22;">Array</span>(1, 2, 3, 4);\n    <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">Array</span>() { ... }\n  })();\n\n  <span style="color: #b22222;">// </span><span style="color: #b22222;">etc.\n</span></pre>\n\n\n\n</div>\n\n</div>\n\n<div id="outline-container-1_1_2" class="outline-4">\n<h4 id="sec-1_1_2"><span class="section-number-4">1.1.2</span> <code>obj.toString()</code> ==&gt; <code>obj+“”</code> </h4>\n<div class="outline-text-4" id="text-1_1_2">\n\n\n</div>\n</div>\n\n</div>\n\n<div id="outline-container-1_2" class="outline-3">\n<h3 id="sec-1_2"><span class="section-number-3">1.2</span> Install (NPM) </h3>\n<div class="outline-text-3" id="text-1_2">\n\n\n<p>\nUglifyJS is now available through NPM &mdash; <code>npm install uglify-js</code> should do\nthe job.\n</p>\n</div>\n\n</div>\n\n<div id="outline-container-1_3" class="outline-3">\n<h3 id="sec-1_3"><span class="section-number-3">1.3</span> Install latest code from GitHub </h3>\n<div class="outline-text-3" id="text-1_3">\n\n\n\n\n\n<pre class="src src-sh"><span style="color: #b22222;">## </span><span style="color: #b22222;">clone the repository\n</span>mkdir -p /where/you/wanna/put/it\n<span style="color: #da70d6;">cd</span> /where/you/wanna/put/it\ngit clone git://github.com/mishoo/UglifyJS.git\n\n<span style="color: #b22222;">## </span><span style="color: #b22222;">make the module available to Node\n</span>mkdir -p ~/.node_libraries/\n<span style="color: #da70d6;">cd</span> ~/.node_libraries/\nln -s /where/you/wanna/put/it/UglifyJS/uglify-js.js\n\n<span style="color: #b22222;">## </span><span style="color: #b22222;">and if you want the CLI script too:\n</span>mkdir -p ~/bin\n<span style="color: #da70d6;">cd</span> ~/bin\nln -s /where/you/wanna/put/it/UglifyJS/bin/uglifyjs\n  <span style="color: #b22222;"># </span><span style="color: #b22222;">(then add ~/bin to your $PATH if it\'s not there already)\n</span></pre>\n\n\n\n</div>\n\n</div>\n\n<div id="outline-container-1_4" class="outline-3">\n<h3 id="sec-1_4"><span class="section-number-3">1.4</span> Usage </h3>\n<div class="outline-text-3" id="text-1_4">\n\n\n<p>\nThere is a command-line tool that exposes the functionality of this library\nfor your shell-scripting needs:\n</p>\n\n\n\n<pre class="src src-sh">uglifyjs [ options... ] [ filename ]\n</pre>\n\n\n\n<p>\n<code>filename</code> should be the last argument and should name the file from which\nto read the JavaScript code.  If you don\'t specify it, it will read code\nfrom STDIN.\n</p>\n<p>\nSupported options:\n</p>\n<ul>\n<li>\n<code>-b</code> or <code>--beautify</code> &mdash; output indented code; when passed, additional\noptions control the beautifier:\n\n<ul>\n<li>\n<code>-i N</code> or <code>--indent N</code> &mdash; indentation level (number of spaces)\n\n</li>\n<li>\n<code>-q</code> or <code>--quote-keys</code> &mdash; quote keys in literal objects (by default,\nonly keys that cannot be identifier names will be quotes).\n\n</li>\n</ul>\n</li>\n<li>\n<code>--ascii</code> &mdash; pass this argument to encode non-ASCII characters as\n<code>\\uXXXX</code> sequences.  By default UglifyJS won\'t bother to do it and will\noutput Unicode characters instead.  (the output is always encoded in UTF8,\nbut if you pass this option you\'ll only get ASCII).\n\n</li>\n<li>\n<code>-nm</code> or <code>--no-mangle</code> &mdash; don\'t mangle variable names\n\n</li>\n<li>\n<code>-ns</code> or <code>--no-squeeze</code> &mdash; don\'t call <code>ast_squeeze()</code> (which does various\noptimizations that result in smaller, less readable code).\n\n</li>\n<li>\n<code>-mt</code> or <code>--mangle-toplevel</code> &mdash; mangle names in the toplevel scope too\n(by default we don\'t do this).\n\n</li>\n<li>\n<code>--no-seqs</code> &mdash; when <code>ast_squeeze()</code> is called (thus, unless you pass\n<code>--no-squeeze</code>) it will reduce consecutive statements in blocks into a\nsequence.  For example, "a = 10; b = 20; foo();" will be written as\n"a=10,b=20,foo();".  In various occasions, this allows us to discard the\nblock brackets (since the block becomes a single statement).  This is ON\nby default because it seems safe and saves a few hundred bytes on some\nlibs that I tested it on, but pass <code>--no-seqs</code> to disable it.\n\n</li>\n<li>\n<code>--no-dead-code</code> &mdash; by default, UglifyJS will remove code that is\nobviously unreachable (code that follows a <code>return</code>, <code>throw</code>, <code>break</code> or\n<code>continue</code> statement and is not a function/variable declaration).  Pass\nthis option to disable this optimization.\n\n</li>\n<li>\n<code>-nc</code> or <code>--no-copyright</code> &mdash; by default, <code>uglifyjs</code> will keep the initial\ncomment tokens in the generated code (assumed to be copyright information\netc.).  If you pass this it will discard it.\n\n</li>\n<li>\n<code>-o filename</code> or <code>--output filename</code> &mdash; put the result in <code>filename</code>.  If\nthis isn\'t given, the result goes to standard output (or see next one).\n\n</li>\n<li>\n<code>--overwrite</code> &mdash; if the code is read from a file (not from STDIN) and you\npass <code>--overwrite</code> then the output will be written in the same file.\n\n</li>\n<li>\n<code>--ast</code> &mdash; pass this if you want to get the Abstract Syntax Tree instead\nof JavaScript as output.  Useful for debugging or learning more about the\ninternals.\n\n</li>\n<li>\n<code>-v</code> or <code>--verbose</code> &mdash; output some notes on STDERR (for now just how long\neach operation takes).\n\n</li>\n<li>\n<code>--unsafe</code> &mdash; enable other additional optimizations that are known to be\nunsafe in some contrived situations, but could still be generally useful.\nFor now only this:\n\n<ul>\n<li>\nfoo.toString()  ==&gt;  foo+""\n\n</li>\n</ul>\n</li>\n<li>\n<code>--max-line-len</code> (default 32K characters) &mdash; add a newline after around\n32K characters.  I\'ve seen both FF and Chrome croak when all the code was\non a single line of around 670K.  Pass &ndash;max-line-len 0 to disable this\nsafety feature.\n\n</li>\n<li>\n<code>--reserved-names</code> &mdash; some libraries rely on certain names to be used, as\npointed out in issue #92 and #81, so this option allow you to exclude such\nnames from the mangler.  For example, to keep names <code>require</code> and <code>$super</code>\nintact you\'d specify &ndash;reserved-names "require,$super".\n\n</li>\n<li>\n<code>--inline-script</code> &ndash; when you want to include the output literally in an\nHTML <code>&lt;script&gt;</code> tag you can use this option to prevent <code>&lt;/script</code> from\nshowing up in the output.\n\n</li>\n<li>\n<code>--lift-vars</code> &ndash; when you pass this, UglifyJS will apply the following\ntransformations (see the notes in API, <code>ast_lift_variables</code>):\n\n<ul>\n<li>\nput all <code>var</code> declarations at the start of the scope\n</li>\n<li>\nmake sure a variable is declared only once\n</li>\n<li>\ndiscard unused function arguments\n</li>\n<li>\ndiscard unused inner (named) functions\n</li>\n<li>\nfinally, try to merge assignments into that one <code>var</code> declaration, if\npossible.\n</li>\n</ul>\n</li>\n</ul>\n\n\n\n</div>\n\n<div id="outline-container-1_4_1" class="outline-4">\n<h4 id="sec-1_4_1"><span class="section-number-4">1.4.1</span> API </h4>\n<div class="outline-text-4" id="text-1_4_1">\n\n\n<p>\nTo use the library from JavaScript, you\'d do the following (example for\nNodeJS):\n</p>\n\n\n\n<pre class="src src-js"><span style="color: #a020f0;">var</span> <span style="color: #b8860b;">jsp</span> = require(<span style="color: #bc8f8f;">"uglify-js"</span>).parser;\n<span style="color: #a020f0;">var</span> <span style="color: #b8860b;">pro</span> = require(<span style="color: #bc8f8f;">"uglify-js"</span>).uglify;\n\n<span style="color: #a020f0;">var</span> <span style="color: #b8860b;">orig_code</span> = <span style="color: #bc8f8f;">"... JS code here"</span>;\n<span style="color: #a020f0;">var</span> <span style="color: #b8860b;">ast</span> = jsp.parse(orig_code); <span style="color: #b22222;">// </span><span style="color: #b22222;">parse code and get the initial AST\n</span>ast = pro.ast_mangle(ast); <span style="color: #b22222;">// </span><span style="color: #b22222;">get a new AST with mangled names\n</span>ast = pro.ast_squeeze(ast); <span style="color: #b22222;">// </span><span style="color: #b22222;">get an AST with compression optimizations\n</span><span style="color: #a020f0;">var</span> <span style="color: #b8860b;">final_code</span> = pro.gen_code(ast); <span style="color: #b22222;">// </span><span style="color: #b22222;">compressed code here\n</span></pre>\n\n\n\n<p>\nThe above performs the full compression that is possible right now.  As you\ncan see, there are a sequence of steps which you can apply.  For example if\nyou want compressed output but for some reason you don\'t want to mangle\nvariable names, you would simply skip the line that calls\n<code>pro.ast_mangle(ast)</code>.\n</p>\n<p>\nSome of these functions take optional arguments.  Here\'s a description:\n</p>\n<ul>\n<li>\n<code>jsp.parse(code, strict_semicolons)</code> &ndash; parses JS code and returns an AST.\n<code>strict_semicolons</code> is optional and defaults to <code>false</code>.  If you pass\n<code>true</code> then the parser will throw an error when it expects a semicolon and\nit doesn\'t find it.  For most JS code you don\'t want that, but it\'s useful\nif you want to strictly sanitize your code.\n\n</li>\n<li>\n<code>pro.ast_lift_variables(ast)</code> &ndash; merge and move <code>var</code> declarations to the\nscop of the scope; discard unused function arguments or variables; discard\nunused (named) inner functions.  It also tries to merge assignments\nfollowing the <code>var</code> declaration into it.\n\n<p>\nIf your code is very hand-optimized concerning <code>var</code> declarations, this\nlifting variable declarations might actually increase size.  For me it\nhelps out.  On jQuery it adds 865 bytes (243 after gzip).  YMMV.  Also\nnote that (since it\'s not enabled by default) this operation isn\'t yet\nheavily tested (please report if you find issues!).\n</p>\n<p>\nNote that although it might increase the image size (on jQuery it gains\n865 bytes, 243 after gzip) it\'s technically more correct: in certain\nsituations, dead code removal might drop variable declarations, which\nwould not happen if the variables are lifted in advance.\n</p>\n<p>\nHere\'s an example of what it does:\n</p>\n</li>\n</ul>\n\n\n\n\n<pre class="src src-js"><span style="color: #a020f0;">function</span> <span style="color: #0000ff;">f</span>(<span style="color: #b8860b;">a</span>, <span style="color: #b8860b;">b</span>, <span style="color: #b8860b;">c</span>, <span style="color: #b8860b;">d</span>, <span style="color: #b8860b;">e</span>) {\n    <span style="color: #a020f0;">var</span> <span style="color: #b8860b;">q</span>;\n    <span style="color: #a020f0;">var</span> <span style="color: #b8860b;">w</span>;\n    w = 10;\n    q = 20;\n    <span style="color: #a020f0;">for</span> (<span style="color: #a020f0;">var</span> <span style="color: #b8860b;">i</span> = 1; i &lt; 10; ++i) {\n        <span style="color: #a020f0;">var</span> <span style="color: #b8860b;">boo</span> = foo(a);\n    }\n    <span style="color: #a020f0;">for</span> (<span style="color: #a020f0;">var</span> <span style="color: #b8860b;">i</span> = 0; i &lt; 1; ++i) {\n        <span style="color: #a020f0;">var</span> <span style="color: #b8860b;">boo</span> = bar(c);\n    }\n    <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">foo</span>(){ ... }\n    <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">bar</span>(){ ... }\n    <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">baz</span>(){ ... }\n}\n\n<span style="color: #b22222;">// </span><span style="color: #b22222;">transforms into ==&gt;\n</span>\n<span style="color: #a020f0;">function</span> <span style="color: #0000ff;">f</span>(<span style="color: #b8860b;">a</span>, <span style="color: #b8860b;">b</span>, <span style="color: #b8860b;">c</span>) {\n    <span style="color: #a020f0;">var</span> <span style="color: #b8860b;">i</span>, <span style="color: #b8860b;">boo</span>, <span style="color: #b8860b;">w</span> = 10, <span style="color: #b8860b;">q</span> = 20;\n    <span style="color: #a020f0;">for</span> (i = 1; i &lt; 10; ++i) {\n        boo = foo(a);\n    }\n    <span style="color: #a020f0;">for</span> (i = 0; i &lt; 1; ++i) {\n        boo = bar(c);\n    }\n    <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">foo</span>() { ... }\n    <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">bar</span>() { ... }\n}\n</pre>\n\n\n\n<ul>\n<li>\n<code>pro.ast_mangle(ast, options)</code> &ndash; generates a new AST containing mangled\n(compressed) variable and function names.  It supports the following\noptions:\n\n<ul>\n<li>\n<code>toplevel</code> &ndash; mangle toplevel names (by default we don\'t touch them).\n</li>\n<li>\n<code>except</code> &ndash; an array of names to exclude from compression.\n\n</li>\n</ul>\n</li>\n<li>\n<code>pro.ast_squeeze(ast, options)</code> &ndash; employs further optimizations designed\nto reduce the size of the code that <code>gen_code</code> would generate from the\nAST.  Returns a new AST.  <code>options</code> can be a hash; the supported options\nare:\n\n<ul>\n<li>\n<code>make_seqs</code> (default true) which will cause consecutive statements in a\nblock to be merged using the "sequence" (comma) operator\n\n</li>\n<li>\n<code>dead_code</code> (default true) which will remove unreachable code.\n\n</li>\n</ul>\n</li>\n<li>\n<code>pro.gen_code(ast, options)</code> &ndash; generates JS code from the AST.  By\ndefault it\'s minified, but using the <code>options</code> argument you can get nicely\nformatted output.  <code>options</code> is, well, optional :-) and if you pass it it\nmust be an object and supports the following properties (below you can see\nthe default values):\n\n<ul>\n<li>\n<code>beautify: false</code> &ndash; pass <code>true</code> if you want indented output\n</li>\n<li>\n<code>indent_start: 0</code> (only applies when <code>beautify</code> is <code>true</code>) &ndash; initial\nindentation in spaces\n</li>\n<li>\n<code>indent_level: 4</code> (only applies when <code>beautify</code> is <code>true</code>) --\nindentation level, in spaces (pass an even number)\n</li>\n<li>\n<code>quote_keys: false</code> &ndash; if you pass <code>true</code> it will quote all keys in\nliteral objects\n</li>\n<li>\n<code>space_colon: false</code> (only applies when <code>beautify</code> is <code>true</code>) &ndash; wether\nto put a space before the colon in object literals\n</li>\n<li>\n<code>ascii_only: false</code> &ndash; pass <code>true</code> if you want to encode non-ASCII\ncharacters as <code>\\uXXXX</code>.\n</li>\n<li>\n<code>inline_script: false</code> &ndash; pass <code>true</code> to escape occurrences of\n<code>&lt;/script</code> in strings\n</li>\n</ul>\n</li>\n</ul>\n\n\n</div>\n\n</div>\n\n<div id="outline-container-1_4_2" class="outline-4">\n<h4 id="sec-1_4_2"><span class="section-number-4">1.4.2</span> Beautifier shortcoming &ndash; no more comments </h4>\n<div class="outline-text-4" id="text-1_4_2">\n\n\n<p>\nThe beautifier can be used as a general purpose indentation tool.  It\'s\nuseful when you want to make a minified file readable.  One limitation,\nthough, is that it discards all comments, so you don\'t really want to use it\nto reformat your code, unless you don\'t have, or don\'t care about, comments.\n</p>\n<p>\nIn fact it\'s not the beautifier who discards comments &mdash; they are dumped at\nthe parsing stage, when we build the initial AST.  Comments don\'t really\nmake sense in the AST, and while we could add nodes for them, it would be\ninconvenient because we\'d have to add special rules to ignore them at all\nthe processing stages.\n</p>\n</div>\n</div>\n\n</div>\n\n<div id="outline-container-1_5" class="outline-3">\n<h3 id="sec-1_5"><span class="section-number-3">1.5</span> Compression &ndash; how good is it? </h3>\n<div class="outline-text-3" id="text-1_5">\n\n\n<p>\nHere are updated statistics.  (I also updated my Google Closure and YUI\ninstallations).\n</p>\n<p>\nWe\'re still a lot better than YUI in terms of compression, though slightly\nslower.  We\'re still a lot faster than Closure, and compression after gzip\nis comparable.\n</p>\n<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">\n<caption></caption>\n<colgroup><col align="left" /><col align="left" /><col align="right" /><col align="left" /><col align="right" /><col align="left" /><col align="right" />\n</colgroup>\n<thead>\n<tr><th scope="col">File</th><th scope="col">UglifyJS</th><th scope="col">UglifyJS+gzip</th><th scope="col">Closure</th><th scope="col">Closure+gzip</th><th scope="col">YUI</th><th scope="col">YUI+gzip</th></tr>\n</thead>\n<tbody>\n<tr><td>jquery-1.6.2.js</td><td>91001 (0:01.59)</td><td>31896</td><td>90678 (0:07.40)</td><td>31979</td><td>101527 (0:01.82)</td><td>34646</td></tr>\n<tr><td>paper.js</td><td>142023 (0:01.65)</td><td>43334</td><td>134301 (0:07.42)</td><td>42495</td><td>173383 (0:01.58)</td><td>48785</td></tr>\n<tr><td>prototype.js</td><td>88544 (0:01.09)</td><td>26680</td><td>86955 (0:06.97)</td><td>26326</td><td>92130 (0:00.79)</td><td>28624</td></tr>\n<tr><td>thelib-full.js (DynarchLIB)</td><td>251939 (0:02.55)</td><td>72535</td><td>249911 (0:09.05)</td><td>72696</td><td>258869 (0:01.94)</td><td>76584</td></tr>\n</tbody>\n</table>\n\n\n</div>\n\n</div>\n\n<div id="outline-container-1_6" class="outline-3">\n<h3 id="sec-1_6"><span class="section-number-3">1.6</span> Bugs? </h3>\n<div class="outline-text-3" id="text-1_6">\n\n\n<p>\nUnfortunately, for the time being there is no automated test suite.  But I\nran the compressor manually on non-trivial code, and then I tested that the\ngenerated code works as expected.  A few hundred times.\n</p>\n<p>\nDynarchLIB was started in times when there was no good JS minifier.\nTherefore I was quite religious about trying to write short code manually,\nand as such DL contains a lot of syntactic hacks<sup><a class="footref" name="fnr.1" href="#fn.1">1</a></sup> such as “foo == bar ?  a\n= 10 : b = 20”, though the more readable version would clearly be to use\n“if/else”.\n</p>\n<p>\nSince the parser/compressor runs fine on DL and jQuery, I\'m quite confident\nthat it\'s solid enough for production use.  If you can identify any bugs,\nI\'d love to hear about them (<a href="http://groups.google.com/group/uglifyjs">use the Google Group</a> or email me directly).\n</p>\n</div>\n\n</div>\n\n<div id="outline-container-1_7" class="outline-3">\n<h3 id="sec-1_7"><span class="section-number-3">1.7</span> Links </h3>\n<div class="outline-text-3" id="text-1_7">\n\n\n<ul>\n<li>\nTwitter: <a href="http://twitter.com/UglifyJS">@UglifyJS</a>\n</li>\n<li>\nProject at GitHub: <a href="http://github.com/mishoo/UglifyJS">http://github.com/mishoo/UglifyJS</a>\n</li>\n<li>\nGoogle Group: <a href="http://groups.google.com/group/uglifyjs">http://groups.google.com/group/uglifyjs</a>\n</li>\n<li>\nCommon Lisp JS parser: <a href="http://marijn.haverbeke.nl/parse-js/">http://marijn.haverbeke.nl/parse-js/</a>\n</li>\n<li>\nJS-to-Lisp compiler: <a href="http://github.com/marijnh/js">http://github.com/marijnh/js</a>\n</li>\n<li>\nCommon Lisp JS uglifier: <a href="http://github.com/mishoo/cl-uglify-js">http://github.com/mishoo/cl-uglify-js</a>\n</li>\n</ul>\n\n\n</div>\n\n</div>\n\n<div id="outline-container-1_8" class="outline-3">\n<h3 id="sec-1_8"><span class="section-number-3">1.8</span> License </h3>\n<div class="outline-text-3" id="text-1_8">\n\n\n<p>\nUglifyJS is released under the BSD license:\n</p>\n\n\n\n<pre class="example">Copyright 2010 (c) Mihai Bazon &lt;mihai.bazon@gmail.com&gt;\nBased on parse-js (http://marijn.haverbeke.nl/parse-js/).\n\nRedistribution and use in source and binary forms, with or without\nmodification, are permitted provided that the following conditions\nare met:\n\n    * Redistributions of source code must retain the above\n      copyright notice, this list of conditions and the following\n      disclaimer.\n\n    * Redistributions in binary form must reproduce the above\n      copyright notice, this list of conditions and the following\n      disclaimer in the documentation and/or other materials\n      provided with the distribution.\n\nTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER “AS IS” AND ANY\nEXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\nIMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR\nPURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE\nLIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY,\nOR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,\nPROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR\nPROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY\nTHEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR\nTORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF\nTHE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF\nSUCH DAMAGE.\n</pre>\n\n\n\n\n</div>\n</div>\n</div>\n<div id="footnotes">\n<h2 class="footnotes">Footnotes: </h2>\n<div id="text-footnotes">\n<p class="footnote"><sup><a class="footnum" name="fn.1" href="#fnr.1">1</a></sup> I even reported a few bugs and suggested some fixes in the original\n<a href="http://marijn.haverbeke.nl/parse-js/">parse-js</a> library, and Marijn pushed fixes literally in minutes.\n</p>\n</div>\n</div>\n<div id="postamble">\n<p class="author"> Author: Mihai Bazon\n</p>\n<p class="date"> Date: 2011-08-20 10:08:28 EEST</p>\n<p class="creator">HTML generated by org-mode 7.01trans in emacs 23</p>\n</div>\n</div>\n</body>\n</html>\n',
+194 silly resolved     _id: 'uglify-js@1.0.7',
+194 silly resolved     description: '<?xml version="1.0" encoding="utf-8"?> <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"> <head> <title>UglifyJS -- a JavaScript parser/compressor/beautifier</title> <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/> <meta name="generator" content="Org-mode"/> <meta name="generated" content="2011-08-20 10:08:28 EEST"/> <meta name="author" content="Mihai Bazon"/> <meta name="description" content="a JavaScript parser/compressor/beautifier in JavaScript"/> <meta name="keywords" content="javascript, js, parser, compiler, compressor, mangle, minify, minifier"/> <style type="text/css">  <!--/*--><![CDATA[/*><!--*/   html { font-family: Times, serif; font-size: 12pt; }   .title  { text-align: center; }   .todo   { color: red; }   .done   { color: green; }   .tag    { background-color: #add8e6; font-weight:normal }   .target { }   .timestamp { color: #bebebe; }   .timestamp-kwd { color: #5f9ea0; }   p.verse { margin-left: 3% }   pre { \tborder: 1pt solid #AEBDCC; \tbackground-color: #F3F5F7; \tpadding: 5pt; \tfont-family: courier, monospace;         font-size: 90%;         overflow:auto;   }   table { border-collapse: collapse; }   td, th { vertical-align: top; }   dt { font-weight: bold; }   div.figure { padding: 0.5em; }   div.figure p { text-align: center; }   textarea { overflow-x: auto; }   .linenr { font-size:smaller }   .code-highlighted {background-color:#ffff00;}   .org-info-js_info-navigation { border-style:none; }   #org-info-js_console-label { font-size:10px; font-weight:bold;                                white-space:nowrap; }   .org-info-js_search-highlight {background-color:#ffff00; color:#000000;                                  font-weight:bold; }   /*]]>*/--> </style> <link rel="stylesheet" type="text/css" href="docstyle.css" /> <script type="text/javascript"> <!--/*--><![CDATA[/*><!--*/  function CodeHighlightOn(elem, id)  {    var target = document.getElementById(id);    if(null != target) {      elem.cacheClassElem = elem.className;      elem.cacheClassTarget = target.className;      target.className = "code-highlighted";      elem.className   = "code-highlighted";    }  }  function CodeHighlightOff(elem, id)  {    var target = document.getElementById(id);    if(elem.cacheClassElem)      elem.className = elem.cacheClassElem;    if(elem.cacheClassTarget)      target.className = elem.cacheClassTarget;  } /*]]>*///--> </script>',
+194 silly resolved     _from: 'uglify-js@1.0.7' },
+194 silly resolved   { author: { name: 'Trevor Burnham', url: 'http://trevorburnham.com' },
+194 silly resolved     name: 'dep-graph',
+194 silly resolved     description: 'Simple dependency graph management',
+194 silly resolved     version: '1.1.0',
+194 silly resolved     homepage: 'http://github.com/TrevorBurnham/dep-graph',
+194 silly resolved     repository:
+194 silly resolved      { type: 'git',
+194 silly resolved        url: 'git://github.com/TrevorBurnham/dep-graph.git' },
+194 silly resolved     main: 'lib/dep-graph.js',
+194 silly resolved     dependencies: { underscore: '1.2.1' },
+194 silly resolved     devDependencies:
+194 silly resolved      { 'coffee-script': '1.1.2',
+194 silly resolved        nodeunit: '0.5.4',
+194 silly resolved        watchit: '>=0.0.1' },
+194 silly resolved     readme: '# dep-graph.js\n\nThis is a small project spun off from [connect-assets](http://github.com/TrevorBurnham/connect-assets). Written in [CoffeeScript](coffeescript.org) by the author of [CoffeeScript: Accelerated JavaScript Development](http://pragprog.com/book/tbcoffee/coffeescript).\n\n## What\'s it for?\n\nSay you have a set of resources that depend on each other in some way. These resources can be anything—files, chains of command, plot twists on *Lost*—whatever. All that matters is that each one has a unique string identifier, and a list of direct dependencies.\n\n`dep-graph` makes it easy to compute "chains" of dependencies, with guaranteed logical ordering and no duplicates. That\'s trivial in most cases, but if `A` depends on `B` and `B` depends on `A`, a naïve dependency graph would get trapped in an infinite loop. `dep-graph` throws an error if any such "cycles" are detected.\n\n## How to use it?\n\n### In the browser\n\n    deps = new DepGraph\n    deps.add \'A\', \'B\'  # A requires B\n    deps.add \'B\', \'C\'  # B requires C\n    deps.getChain \'A\'  # [\'C\', \'B\', \'A\']\n\n### In Node.js\n\nSame as above, but first run\n\n    npm install dep-graph\n\nfrom your project\'s directory, and put\n\n    DepGraph = require \'dep-graph\'\n\nat the top of your file.\n\n## License\n\n©2011 Trevor Burnham and available under the [MIT license](http://www.opensource.org/licenses/mit-license.php):\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.',
+194 silly resolved     _id: 'dep-graph@1.1.0',
+194 silly resolved     _from: 'dep-graph@1.1.0' } ]
+195 info install underscore@1.1.7 into /usr/local/lib/node_modules/snockets
+196 info install coffee-script@1.3.3 into /usr/local/lib/node_modules/snockets
+197 info install mime@1.2.2 into /usr/local/lib/node_modules/snockets
+198 info install uglify-js@1.0.7 into /usr/local/lib/node_modules/snockets
+199 info install dep-graph@1.1.0 into /usr/local/lib/node_modules/snockets
+200 info installOne underscore@1.1.7
+201 info installOne coffee-script@1.3.3
+202 info installOne mime@1.2.2
+203 info installOne uglify-js@1.0.7
+204 info installOne dep-graph@1.1.0
+205 verbose from cache /home/dunice/.npm/underscore/1.1.7/package/package.json
+206 verbose from cache /home/dunice/.npm/coffee-script/1.3.3/package/package.json
+207 verbose from cache /home/dunice/.npm/mime/1.2.2/package/package.json
+208 verbose from cache /home/dunice/.npm/uglify-js/1.0.7/package/package.json
+209 verbose from cache /home/dunice/.npm/dep-graph/1.1.0/package/package.json
+210 info /usr/local/lib/node_modules/snockets/node_modules/underscore unbuild
+211 verbose read json /usr/local/lib/node_modules/snockets/node_modules/underscore/package.json
+212 info /usr/local/lib/node_modules/snockets/node_modules/coffee-script unbuild
+213 verbose read json /usr/local/lib/node_modules/snockets/node_modules/coffee-script/package.json
+214 info /usr/local/lib/node_modules/snockets/node_modules/mime unbuild
+215 verbose read json /usr/local/lib/node_modules/snockets/node_modules/mime/package.json
+216 info /usr/local/lib/node_modules/snockets/node_modules/uglify-js unbuild
+217 verbose read json /usr/local/lib/node_modules/snockets/node_modules/uglify-js/package.json
+218 info /usr/local/lib/node_modules/snockets/node_modules/dep-graph unbuild
+219 verbose read json /usr/local/lib/node_modules/snockets/node_modules/dep-graph/package.json
+220 verbose tar unpack /home/dunice/.npm/underscore/1.1.7/package.tgz
+221 verbose tar unpack /home/dunice/.npm/coffee-script/1.3.3/package.tgz
+222 verbose tar unpack /home/dunice/.npm/mime/1.2.2/package.tgz
+223 verbose tar unpack /home/dunice/.npm/uglify-js/1.0.7/package.tgz
+224 verbose tar unpack /home/dunice/.npm/dep-graph/1.1.0/package.tgz
+225 silly lockFile 90ee0728-snockets-node-modules-underscore /usr/local/lib/node_modules/snockets/node_modules/underscore
+226 verbose lock /usr/local/lib/node_modules/snockets/node_modules/underscore /home/dunice/.npm/90ee0728-snockets-node-modules-underscore.lock
+227 silly lockFile 962bf188-ckets-node-modules-coffee-script /usr/local/lib/node_modules/snockets/node_modules/coffee-script
+228 verbose lock /usr/local/lib/node_modules/snockets/node_modules/coffee-script /home/dunice/.npm/962bf188-ckets-node-modules-coffee-script.lock
+229 silly lockFile 3aa859f8-dules-snockets-node-modules-mime /usr/local/lib/node_modules/snockets/node_modules/mime
+230 verbose lock /usr/local/lib/node_modules/snockets/node_modules/mime /home/dunice/.npm/3aa859f8-dules-snockets-node-modules-mime.lock
+231 silly lockFile 6e815a18--snockets-node-modules-uglify-js /usr/local/lib/node_modules/snockets/node_modules/uglify-js
+232 verbose lock /usr/local/lib/node_modules/snockets/node_modules/uglify-js /home/dunice/.npm/6e815a18--snockets-node-modules-uglify-js.lock
+233 silly lockFile 1a70e90b--snockets-node-modules-dep-graph /usr/local/lib/node_modules/snockets/node_modules/dep-graph
+234 verbose lock /usr/local/lib/node_modules/snockets/node_modules/dep-graph /home/dunice/.npm/1a70e90b--snockets-node-modules-dep-graph.lock
+235 silly gunzTarPerm modes [ '755', '644' ]
+236 silly gunzTarPerm modes [ '755', '644' ]
+237 silly gunzTarPerm modes [ '755', '644' ]
+238 silly gunzTarPerm modes [ '755', '644' ]
+239 silly gunzTarPerm modes [ '755', '644' ]
+240 silly gunzTarPerm extractEntry README.md
+241 silly gunzTarPerm extractEntry src/
+242 verbose read json /usr/local/lib/node_modules/snockets/node_modules/uglify-js/package.json
+243 silly gunzTarPerm extractEntry index.html
+244 silly gunzTarPerm extractEntry mime.js
+245 silly gunzTarPerm extractEntry mime.types
+246 silly gunzTarPerm extractEntry README
+247 silly lockFile 6e815a18--snockets-node-modules-uglify-js /usr/local/lib/node_modules/snockets/node_modules/uglify-js
+248 silly gunzTarPerm extractEntry src/dep-graph.coffee
+249 silly gunzTarPerm extractEntry test/
+250 silly gunzTarPerm extractEntry test/test.coffee
+251 silly gunzTarPerm extractEntry index.js
+252 info /usr/local/lib/node_modules/snockets/node_modules/uglify-js unbuild
+253 verbose read json /usr/local/lib/node_modules/snockets/node_modules/uglify-js/package.json
+254 silly gunzTarPerm extractEntry node.types
+255 silly gunzTarPerm extractEntry README
+256 silly gunzTarPerm extractEntry .npmignore
+257 silly gunzTarPerm extractEntry test.js
+258 silly gunzTarPerm extractEntry lib/
+259 silly gunzTarPerm extractEntry lib/coffee-script/
+260 silly gunzTarPerm extractEntry index.js
+261 silly gunzTarPerm extractEntry lib/coffee-script/repl.js
+262 silly gunzTarPerm extractEntry lib/
+263 silly gunzTarPerm extractEntry lib/dep-graph.js
+264 silly gunzTarPerm extractEntry underscore-min.js
+265 silly gunzTarPerm extractEntry lib/coffee-script/parser.js
+266 silly gunzTarPerm extractEntry package.json
+267 verbose about to build /usr/local/lib/node_modules/snockets
+268 info /usr/local/lib/node_modules/snockets unbuild
+269 verbose from cache /usr/local/lib/node_modules/snockets/package.json
+270 silly gunzTarPerm extractEntry .npmignore
+271 silly gunzTarPerm extractEntry underscore.js
+272 silly gunzTarPerm extractEntry README.mdown
+273 info preuninstall snockets@1.3.8
+274 silly gunzTarPerm extractEntry LICENSE
+275 silly gunzTarPerm extractEntry package.json
+276 silly gunzTarPerm extractEntry LICENSE
+277 info uninstall snockets@1.3.8
+278 verbose true,/usr/local/lib/node_modules,/usr/local/lib/node_modules unbuild snockets@1.3.8
+279 info postuninstall snockets@1.3.8
+280 silly gunzTarPerm extractEntry lib/coffee-script/optparse.js
+281 silly gunzTarPerm extractEntry lib/coffee-script/coffee-script.js
+282 silly gunzTarPerm extractEntry lib/coffee-script/index.js
+283 silly gunzTarPerm extractEntry package.json
+284 silly gunzTarPerm extractEntry Cakefile
+285 silly gunzTarPerm extractEntry docs/
+286 silly gunzTarPerm extractEntry lib/coffee-script/cake.js
+287 silly gunzTarPerm extractEntry lib/coffee-script/browser.js
+288 silly gunzTarPerm extractEntry lib/coffee-script/grammar.js
+289 silly gunzTarPerm extractEntry docs/dep-graph.html
+290 silly gunzTarPerm extractEntry docs/docco.css
+291 silly gunzTarPerm extractEntry lib/coffee-script/command.js
+292 silly gunzTarPerm extractEntry lib/coffee-script/helpers.js
+293 silly gunzTarPerm extractEntry lib/coffee-script/scope.js
+294 silly gunzTarPerm extractEntry lib/coffee-script/nodes.js
+295 error Error: ENOENT, chown '/usr/local/lib/node_modules/snockets/node_modules/dep-graph/test/test.coffee'
+296 error If you need help, you may report this log at:
+296 error     <http://github.com/isaacs/npm/issues>
+296 error or email it to:
+296 error     <npm-@googlegroups.com>
+297 error System Linux 2.6.38-13-generic-pae
+298 error command "/usr/local/bin/node" "/usr/local/bin/npm" "i" "-g" "snockets"
+299 error cwd /home/dunice/work/words
+300 error node -v v0.8.11
+301 error npm -v 1.1.62
+302 error path /usr/local/lib/node_modules/snockets/node_modules/dep-graph/test/test.coffee
+303 error fstream_path /usr/local/lib/node_modules/snockets/node_modules/dep-graph/test/test.coffee
+304 error fstream_type File
+305 error fstream_class FileWriter
+306 error fstream_finish_call chown
+307 error code ENOENT
+308 error errno 34
+309 error fstream_stack Writer._finish (/usr/local/lib/node_modules/npm/node_modules/fstream/lib/writer.js:305:19)
+309 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:218:7
+309 error fstream_stack Object.oncomplete (fs.js:297:15)
+310 verbose exit [ 34, true ]

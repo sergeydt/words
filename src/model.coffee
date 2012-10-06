@@ -7,13 +7,11 @@ db = mongoose.createConnection 'localhost', 'words'
 WordSchema = new Schema 
   word: String
   size: Number
+  rel_size: {type: Number, default: 0}
+  related: [{ type: Schema.Types.ObjectId, ref: 'Word', default: null }]
 WordModel = db.model 'Word', WordSchema
   
-WordRelSchema = new Schema 
-  word: [WordSchema]
-  related: Array
-WordRelModel = db.model 'WordRel', WordRelSchema
 
-module.exports = {WordModel, WordRelModel}
+module.exports = {WordModel}
 
 
