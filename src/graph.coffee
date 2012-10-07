@@ -85,13 +85,12 @@ toArray = (list, offset) ->
       ++i
     return a
 
-Graph = (map) ->
-  @map = map
+Graph = (@map) ->
 
 Graph::findShortestPath = (start, end) ->
   if Object::toString.call(start) is "[object Array]"
     findShortestPath @map, start
-  else if arguments_.length is 2
+  else if arguments.length is 2
     findShortestPath @map, [start, end]
   else
     findShortestPath @map, toArray(arguments_)

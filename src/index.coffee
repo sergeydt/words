@@ -10,6 +10,7 @@ Graph = require './graph'
 
 
 
+
 importWords = (callback)->
   WordModel.remove {}, ->
     file = require('fs').readFileSync('./data/words', 'utf8')
@@ -55,28 +56,24 @@ importRel = (SIZE, callback)->
 #importWords ->
 #  importRel 4
 
-#class Word
-#  constructor: ({@word, @related})->
-#    @s = Infinity
 
-map =
-  a:
-    b: 3
-    c: 1
+#map =
+#  a:
+#    b: 3
+#    c: 1
 
-  b:
-    a: 2
-    c: 1
+#  b:
+#    a: 2
+#    c: 1
 
-  c:
-    a: 4
-    b: 1
+#  c:
+#    a: 4
+#    b: 1
 
-graph = new Graph map
-console.log 'here', graph#.findShortestPath 
+#graph = new Graph map
+#z = graph.findShortestPath "a", "b"
+#console.log 'here', z#.findShortestPath 
 
-process.exit 0
-z = graph.findShortestPath "a", "b" # => ['a', 'c', 'b']
 
 
 WordModel.find({size: 4, rel_size: {$gt: 0}}).populate('related').exec (err, all_words)->
@@ -86,14 +83,26 @@ WordModel.find({size: 4, rel_size: {$gt: 0}}).populate('related').exec (err, all
     _.each w.related, (r)->
       o[r._id] = 1
     map[w._id] = o
-  console.log 'map', map  
+#  console.log 'map', map  
   graph = new Graph map
-  console.log 'Graph', graph
+#  console.log 'Graph', graph
   s1 = 'муха'
   s2 = 'слон'
-  w1 = _.find(all_words, (w)-> w.word is s1)
-  w2 = _.find(all_words, (w)-> w.word is s2)
-  graph.findShortestPath(w1._id, w2._id);
+  w1 = _.find all_words, (w)-> w.word is s1
+  w2 = _.find all_words, (w)-> w.word is s2
+  z = graph.findShortestPath w1._id, w2._id
+  
+  
+  x =  _.map z, (id)->
+    word = _.find all_words, (w)->
+      w._id is id
+    word?.word  
+  
+  console.log 'z',z
+  console.log 'x',x
+  
+  
+  
   
 #  words = _.map all_words, (w)-> new Word w
 #  _.each words, (w)->
@@ -124,12 +133,12 @@ WordModel.find({size: 4, rel_size: {$gt: 0}}).populate('related').exec (err, all
 #      console.log 'iter', w.word, w.s
 #    visited.push wi
 #    
-#    
-#    
+    
+    
 #  iter w1  
-#  
+  
 #  console.log 'here', w1
-#    
+    
     
   
   
