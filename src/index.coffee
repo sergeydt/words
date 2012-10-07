@@ -55,89 +55,11 @@ importRel = (SIZE, callback)->
 
 #importWords ->
 #  importRel 4
+#importRel 5
+#importRel 6
 
-
-#map =
-#  a:
-#    b: 3
-#    c: 1
-
-#  b:
-#    a: 2
-#    c: 1
-
-#  c:
-#    a: 4
-#    b: 1
-
-#graph = new Graph map
-#z = graph.findShortestPath "a", "b"
-#console.log 'here', z#.findShortestPath 
-
-
-
-WordModel.find({size: 4, rel_size: {$gt: 0}}).populate('related').exec (err, all_words)->
-  map = {}
-  _.each all_words, (w)->
-    o = {}
-    _.each w.related, (r)->
-      o[r._id] = 1
-    map[w._id] = o
-#  console.log 'map', map  
-  graph = new Graph map
-#  console.log 'Graph', graph
-  s1 = 'муха'
-  s2 = 'слон'
-  w1 = _.find all_words, (w)-> w.word is s1
-  w2 = _.find all_words, (w)-> w.word is s2
-  z = graph.findShortestPath w1._id, w2._id
   
   
-  x =  _.map z, (id)->
-    word = _.find all_words, (w)->
-      w._id is id
-    word?.word  
-  
-  console.log 'z',z
-  console.log 'x',x
-  
-  
-  
-  
-#  words = _.map all_words, (w)-> new Word w
-#  _.each words, (w)->
-#    w.related = _.map w.related, (w)-> 
-#      found = _.find all_words, (ww)->
-#        console.log 'here', ww._id is w._id
-#        ww._id is w._id
-#      console.log 'found', found  
-#      new Word found
-#  return      
-#      
-#  
-#  s1 = 'муха'
-#  s2 = 'слон'
-#  w1 = _.find(words, (w)-> w.word is s1)
-#  w2 = _.find(words, (w)-> w.word is s2)
-#  
-#  visited = []
-#  
-#  w1.s = 0
-#  iter = (wi)->
-#    {s} = wi
-#    # FIXME: difference by key1
-#    r = _.difference wi.related, visited
-##    console.log 'iter', {related: wi.related, visited}
-#    _.each r, (w)->
-#      w.s = Math.min w.s, s + 1
-#      console.log 'iter', w.word, w.s
-#    visited.push wi
-#    
-    
-    
-#  iter w1  
-  
-#  console.log 'here', w1
     
     
   
@@ -153,9 +75,58 @@ app.use assets()
 app.use express.static(process.cwd() + '/public')
 # Set View Engine
 app.set 'view engine', 'jade'
+
+app.use (req, res, next)-> 
+  res.locals 
+    result: ''
+    w1: req.param('w1')
+    w2: req.param('w2')
+  next()
+
 # Get root_path return index view
 app.get '/', (req, resp) -> 
   resp.render 'index'
+  
+
+
+app.get '/words', (req, res)->
+  s1 = req.param('w1')
+  s2 = req.param('w2')
+  console.log 'words', {s1, s2}
+  WordModel.find({size: s1.length, rel_size: {$gt: 0}}).populate('related').exec (err, all_words)->
+    map = {}
+    _.each all_words, (w)->
+      o = {}
+      _.each w.related, (r)->
+        o[r._id] = 1
+      map[w._id] = o
+  #  console.log 'map', map  
+    graph = new Graph map
+  #  console.log 'Graph', graph
+    w1 = _.find all_words, (w)-> w.word is s1
+    w2 = _.find all_words, (w)-> w.word is s2
+    
+    if not w1 or not w2
+      mess = 'word not found'
+      console.log mess, {w1, w2}
+      return res.render 'index', {result: mess}
+    
+    z = graph.findShortestPath w1._id, w2._id
+
+    if not z
+      mess = 'path not found'
+      console.log 'path not found'
+      return res.render 'index', {result: mess}
+    
+    x =  _.map z, (id)->
+      word = _.find all_words, (w)->
+        w._id.toString() is id.toString()
+      word?.word  
+    
+    console.log 'z',z
+    console.log 'x',x.join(' ')
+    return res.render 'index', {result: x}
+      
 # Define Port
 port = process.env.PORT or process.env.VMC_APP_PORT or 3000
 # Start Server
